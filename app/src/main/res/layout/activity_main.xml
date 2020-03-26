@@ -21,7 +21,6 @@
             android:layout_marginLeft="32dp"
             android:layout_marginTop="120dp"
             android:checked="true"
-            android:onClick="checkButton"
             android:text="Answer 1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -33,7 +32,6 @@
             android:layout_marginStart="32dp"
             android:layout_marginLeft="32dp"
             android:layout_marginTop="55dp"
-            android:onClick="checkButton"
             android:text="Answer 2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/answer1_RB" />
@@ -45,7 +43,6 @@
             android:layout_marginStart="32dp"
             android:layout_marginLeft="32dp"
             android:layout_marginTop="55dp"
-            android:onClick="checkButton"
             android:text="Answer 3"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/answer2_RB" />
@@ -57,7 +54,6 @@
             android:layout_marginStart="32dp"
             android:layout_marginLeft="32dp"
             android:layout_marginTop="55dp"
-            android:onClick="checkButton"
             android:text="Answer 4"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/answer3_RB" />
@@ -86,5 +82,27 @@
         android:text="@string/question"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/quizScore_TV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="490dp"
+        app:layout_constraintStart_toEndOf="@+id/confirm_BT"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Score" />
+
+    <Button
+        android:id="@+id/resultsPage_BT"
+        android:layout_width="86dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="162dp"
+        android:layout_marginLeft="162dp"
+        android:layout_marginTop="8dp"
+        android:text="Results"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/confirm_BT" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
