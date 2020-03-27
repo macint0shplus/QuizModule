@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView quizScore;
     private RadioGroup radioGroup;
     private RadioButton answers;
+    private TextView questionNo;
     private Button confirmButton;
     private Button resultsPageButton;
 
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         // Connecting UI widgets to variables
         question = findViewById(R.id.question_TV);
         radioGroup = findViewById(R.id.answers_RG);
+        questionNo = findViewById(R.id.questionNumber_TV);
         confirmButton = findViewById(R.id.confirm_BT);
         resultsPageButton = findViewById(R.id.resultsPage_BT);
         resultsPageButton.setVisibility(View.GONE);
@@ -93,12 +95,12 @@ public class MainActivity extends AppCompatActivity {
         // Stopping everything when all questions have been answered
         // This includes removing the radio buttons and questions, and adjusting the scores on the UI
         if (questionNumber >= QA.getQAs().size() - 1) {
-            question.setText("DONE");
             noMoreQuestions = true;
-
-            question.setVisibility(View.INVISIBLE);
-            radioGroup.setVisibility(View.INVISIBLE);
-            confirmButton.setVisibility(View.INVISIBLE);
+            questionNo.setVisibility(View.GONE);
+            question.setVisibility(View.GONE);
+            radioGroup.setVisibility(View.GONE);
+            confirmButton.setVisibility(View.GONE);
+            quizScore.setVisibility(View.GONE);
 
             adjustScores(amountCorrect, questionNumber);
             resultsPageButton.setVisibility(View.VISIBLE);
@@ -112,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
     public void askQuestionAnswer() {
 
         // Asking the question
+        questionNo.setText("Question " + (questionNumber + 1) * 1);
         questionText = (QA.getQAs().get(questionsOrderList.get(questionsOrderIndex)).getQuestion());
         question.setText((questionText));
 

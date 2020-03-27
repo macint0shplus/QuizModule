@@ -8,16 +8,14 @@ import android.widget.TextView;
 
 public class afterPage extends AppCompatActivity {
 
+    // Initialising UI elements
     private TextView title;
     private TextView quizName;
-
     private TextView quizMark;
     private TextView quizPercentage;
-
     private TextView mark;
     private TextView percentage;
     private TextView feedback;
-
     private int amountCorrect = 0;
     private double percentCorrect = 0;
     private int questionNumber = 0;
@@ -27,26 +25,29 @@ public class afterPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_after_page);
 
+        // Connecting views to variables
         title = findViewById(R.id.title_TV);
         quizName = findViewById((R.id.quizName_TV));
-
         quizMark = findViewById(R.id.quizMark_TV);
         quizPercentage = findViewById(R.id.quizPercentage_TV);
-
         mark = findViewById(R.id.mark_TV);
         percentage = findViewById((R.id.percentage_TV));
         feedback = findViewById(R.id.quizFeedback_TV);
 
+        // Receiving information from the main activity
         Intent intent = getIntent();
         amountCorrect = intent.getIntExtra("amountCorrect", 0);
         questionNumber = intent.getIntExtra("questionNumber", 0);
 
+        // Calculating the percentage of correct answers
         double percentCorrect = Math.round(((double) amountCorrect / (double) questionNumber * 100) * 10) / 10.0;
 
+        // Updating UI elements
         quizName.setText("Quiz 1 - Basic Math");
         mark.setText(String.valueOf(amountCorrect) + "/" + String.valueOf(questionNumber));
         percentage.setText(String.valueOf(percentCorrect) + "%");
 
+        // Tailoring feedback based on mark
         if (percentCorrect < 50) {
             feedback.setText("Fail... \uD83D\uDE1E \n Revise harder and come back stronger!");
         } else if (percentCorrect >= 50 && percentCorrect < 65) {
