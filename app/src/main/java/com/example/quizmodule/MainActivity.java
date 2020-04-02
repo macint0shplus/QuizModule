@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         quizScore = findViewById((R.id.quizScore_TV));
 
         // Setting the order in which the questions will be asked. This is through the order of their IDs
-        for (int i = 1; i < QA.getQAs().size(); i++) {
+        for (int i = 1; i < QA.getQAs3().size(); i++) {
             questionsOrderList.add(i);
         }
         Collections.shuffle(questionsOrderList);
@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Stopping everything when all questions have been answered
         // This includes removing the radio buttons and questions, and adjusting the scores on the UI
-        if (questionNumber >= QA.getQAs().size() - 1) {
+        if (questionNumber >= QA.getQAs3().size() - 1) {
             noMoreQuestions = true;
             questionNo.setVisibility(View.GONE);
             question.setVisibility(View.GONE);
@@ -112,15 +112,14 @@ public class MainActivity extends AppCompatActivity {
 
     // Displaying the question and answers on the UI
     public void askQuestionAnswer() {
-
         // Asking the question
         questionNo.setText("Question " + (questionNumber + 1) * 1);
-        questionText = (QA.getQAs().get(questionsOrderList.get(questionsOrderIndex)).getQuestion());
+        questionText = (QA.getQAs3().get(questionsOrderList.get(questionsOrderIndex)).getQuestion());
         question.setText((questionText));
 
         /// Randomly selecting the answers (first three which aren't the actual answer will be picked)
         ArrayList<Integer> answerOrderlist = new ArrayList<Integer>();
-        for (int i = 1; i < QA.getQAs().size() - 1; i++) {
+        for (int i = 1; i < QA.getQAs3().size() - 1; i++) {
             answerOrderlist.add(i);
         }
         Collections.shuffle(answerOrderlist);
@@ -137,8 +136,8 @@ public class MainActivity extends AppCompatActivity {
         boolean questionsClear = false;
         int x = 0;
         while (questionsClear == false) {
-            if (QA.getQAs().get(questionsOrderList.get(questionsOrderIndex)).getID() != QA.getQAs().get(answerOrderlist.get(answerOrderIndex)).getID()) {
-                ((RadioButton) radioGroup.getChildAt(radioOrderList.get(x))).setText(String.valueOf(QA.getQAs().get(answerOrderlist.get(answerOrderIndex)).getAnswer()));
+            if (QA.getQAs3().get(questionsOrderList.get(questionsOrderIndex)).getID() != QA.getQAs3().get(answerOrderlist.get(answerOrderIndex)).getID()) {
+                ((RadioButton) radioGroup.getChildAt(radioOrderList.get(x))).setText(String.valueOf(QA.getQAs3().get(answerOrderlist.get(answerOrderIndex)).getAnswer()));
                 x++;
             }
             answerOrderIndex++;
@@ -148,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Displaying the correct answer
-        ((RadioButton) radioGroup.getChildAt(radioOrderList.get(x))).setText(String.valueOf(QA.getQAs().get(questionsOrderList.get(questionsOrderIndex)).getAnswer()));
+        ((RadioButton) radioGroup.getChildAt(radioOrderList.get(x))).setText(String.valueOf(QA.getQAs3().get(questionsOrderList.get(questionsOrderIndex)).getAnswer()));
 
         // Updating the scores on the UI
         questionsOrderIndex++;
@@ -170,6 +169,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, afterPage.class);
         intent.putExtra("amountCorrect", amountCorrect);
         intent.putExtra("questionNumber", questionNumber);
+        intent.putExtra("quizName", QA.getQAs3().get(0).getAnswer());
         startActivity(intent);
     }
 
@@ -178,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
         answers = findViewById(radioID);
 
         // Returning whether the user's answer is correct or not
-        if (answers.getText().equals(QA.getQAs().get(questionsOrderList.get(questionsOrderIndex - 1)).getAnswer())) {
+        if (answers.getText().equals(QA.getQAs3().get(questionsOrderList.get(questionsOrderIndex - 1)).getAnswer())) {
             return true;
         } else {
             return false;

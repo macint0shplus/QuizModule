@@ -19,6 +19,7 @@ public class afterPage extends AppCompatActivity {
     private int amountCorrect = 0;
     private double percentCorrect = 0;
     private int questionNumber = 0;
+    private String quizNameStr = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +39,13 @@ public class afterPage extends AppCompatActivity {
         Intent intent = getIntent();
         amountCorrect = intent.getIntExtra("amountCorrect", 0);
         questionNumber = intent.getIntExtra("questionNumber", 0);
+        quizNameStr = intent.getStringExtra("quizName");
 
         // Calculating the percentage of correct answers
         double percentCorrect = Math.round(((double) amountCorrect / (double) questionNumber * 100) * 10) / 10.0;
 
         // Updating UI elements
-        quizName.setText("Quiz 1 - Basic Math");
+        quizName.setText(String.valueOf(quizNameStr));
         mark.setText(String.valueOf(amountCorrect) + "/" + String.valueOf(questionNumber));
         percentage.setText(String.valueOf(percentCorrect) + "%");
 
