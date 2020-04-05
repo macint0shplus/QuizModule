@@ -13,7 +13,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class MainActivity extends AppCompatActivity {
+public class quizActivity extends AppCompatActivity {
 
     // Setting up UI Widgets
     private TextView question;
@@ -30,15 +30,19 @@ public class MainActivity extends AppCompatActivity {
     private int amountCorrect = 0;
     private int questionsOrderIndex = 0;
     private boolean noMoreQuestions = false;
-    int answerOrderIndex = 0;
+    private int answerOrderIndex = 0;
+    private int quizIndex = 0;
+    private int qaArrayListSize = 0;
+    private ArrayList<com.example.quizmodule.QA> qaArrayRoot;
 
     // Setting up arraylists
     ArrayList<Integer> questionsOrderList = new ArrayList<Integer>();
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.quiz_activity);
 
         // Connecting UI widgets to variables
         question = findViewById(R.id.question_TV);
@@ -49,8 +53,28 @@ public class MainActivity extends AppCompatActivity {
         resultsPageButton.setVisibility(View.GONE);
         quizScore = findViewById((R.id.quizScore_TV));
 
+        Intent intent = getIntent();
+        quizIndex = intent.getIntExtra("quizIndex", 1);
+
+        if (quizIndex == 1) {
+            qaArrayListSize = QA.getQAs1().size();
+            qaArrayRoot = QA.getQAs1();
+        } else if (quizIndex == 2) {
+            qaArrayListSize = QA.getQAs2().size();
+            qaArrayRoot = QA.getQAs2();
+        } else if (quizIndex == 3) {
+            qaArrayListSize = QA.getQAs3().size();
+            qaArrayRoot = QA.getQAs3();
+        } else if (quizIndex == 4) {
+            qaArrayListSize = QA.getQAs4().size();
+            qaArrayRoot = QA.getQAs4();
+        } else if (quizIndex == 5) {
+            qaArrayListSize = QA.getQAs5().size();
+            qaArrayRoot = QA.getQAs5();
+        }
+
         // Setting the order in which the questions will be asked. This is through the order of their IDs
-        for (int i = 1; i < QA.getQAs3().size(); i++) {
+        for (int i = 1; i < qaArrayListSize; i++) {
             questionsOrderList.add(i);
         }
         Collections.shuffle(questionsOrderList);
@@ -94,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Stopping everything when all questions have been answered
         // This includes removing the radio buttons and questions, and adjusting the scores on the UI
-        if (questionNumber >= QA.getQAs3().size() - 1) {
+        if (questionNumber >= qaArrayListSize - 1) {
             noMoreQuestions = true;
             questionNo.setVisibility(View.GONE);
             question.setVisibility(View.GONE);
@@ -114,12 +138,12 @@ public class MainActivity extends AppCompatActivity {
     public void askQuestionAnswer() {
         // Asking the question
         questionNo.setText("Question " + (questionNumber + 1) * 1);
-        questionText = (QA.getQAs3().get(questionsOrderList.get(questionsOrderIndex)).getQuestion());
+        questionText = (qaArrayRoot.get(questionsOrderList.get(questionsOrderIndex)).getQuestion());
         question.setText((questionText));
 
         /// Randomly selecting the answers (first three which aren't the actual answer will be picked)
         ArrayList<Integer> answerOrderlist = new ArrayList<Integer>();
-        for (int i = 1; i < QA.getQAs3().size() - 1; i++) {
+        for (int i = 1; i < qaArrayListSize - 1; i++) {
             answerOrderlist.add(i);
         }
         Collections.shuffle(answerOrderlist);
@@ -136,8 +160,8 @@ public class MainActivity extends AppCompatActivity {
         boolean questionsClear = false;
         int x = 0;
         while (questionsClear == false) {
-            if (QA.getQAs3().get(questionsOrderList.get(questionsOrderIndex)).getID() != QA.getQAs3().get(answerOrderlist.get(answerOrderIndex)).getID()) {
-                ((RadioButton) radioGroup.getChildAt(radioOrderList.get(x))).setText(String.valueOf(QA.getQAs3().get(answerOrderlist.get(answerOrderIndex)).getAnswer()));
+            if (qaArrayRoot.get(questionsOrderList.get(questionsOrderIndex)).getID() != qaArrayRoot.get(answerOrderlist.get(answerOrderIndex)).getID()) {
+                ((RadioButton) radioGroup.getChildAt(radioOrderList.get(x))).setText(String.valueOf(qaArrayRoot.get(answerOrderlist.get(answerOrderIndex)).getAnswer()));
                 x++;
             }
             answerOrderIndex++;
@@ -147,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Displaying the correct answer
-        ((RadioButton) radioGroup.getChildAt(radioOrderList.get(x))).setText(String.valueOf(QA.getQAs3().get(questionsOrderList.get(questionsOrderIndex)).getAnswer()));
+        ((RadioButton) radioGroup.getChildAt(radioOrderList.get(x))).setText(String.valueOf(qaArrayRoot.get(questionsOrderList.get(questionsOrderIndex)).getAnswer()));
 
         // Updating the scores on the UI
         questionsOrderIndex++;
@@ -157,10 +181,10 @@ public class MainActivity extends AppCompatActivity {
     // Adjusting scores on the UI
     public void adjustScores(int amountCorrect, int questionNumber) {
         if (questionNumber == 0) {
-            quizScore.setText(String.valueOf(amountCorrect) + "/" + String.valueOf(questionNumber) + "     --%");
+            quizScore.setText(amountCorrect + "/" + String.valueOf(questionNumber) + "     --%");
         } else {
             double percentCorrect = Math.round(((double) amountCorrect / (double) questionNumber * 100) * 10) / 10.0;
-            quizScore.setText(String.valueOf(amountCorrect) + "/" + String.valueOf(questionNumber) + "     " + String.valueOf(percentCorrect) + "%");
+            quizScore.setText(amountCorrect + "/" + String.valueOf(questionNumber) + "     " + String.valueOf(percentCorrect) + "%");
         }
     }
 
@@ -169,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, afterPage.class);
         intent.putExtra("amountCorrect", amountCorrect);
         intent.putExtra("questionNumber", questionNumber);
-        intent.putExtra("quizName", QA.getQAs3().get(0).getAnswer());
+        intent.putExtra("quizName", qaArrayRoot.get(0).getAnswer());
         startActivity(intent);
     }
 
@@ -178,10 +202,6 @@ public class MainActivity extends AppCompatActivity {
         answers = findViewById(radioID);
 
         // Returning whether the user's answer is correct or not
-        if (answers.getText().equals(QA.getQAs3().get(questionsOrderList.get(questionsOrderIndex - 1)).getAnswer())) {
-            return true;
-        } else {
-            return false;
-        }
+        return answers.getText().equals(qaArrayRoot.get(questionsOrderList.get(questionsOrderIndex - 1)).getAnswer());
     }
 }

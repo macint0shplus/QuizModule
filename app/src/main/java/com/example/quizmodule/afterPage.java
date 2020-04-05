@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class afterPage extends AppCompatActivity {
@@ -20,6 +22,7 @@ public class afterPage extends AppCompatActivity {
     private double percentCorrect = 0;
     private int questionNumber = 0;
     private String quizNameStr = "";
+    private Button returnTitleButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,7 @@ public class afterPage extends AppCompatActivity {
         mark = findViewById(R.id.mark_TV);
         percentage = findViewById((R.id.percentage_TV));
         feedback = findViewById(R.id.quizFeedback_TV);
+        returnTitleButton = findViewById(R.id.returnTitleButton);
 
         // Receiving information from the main activity
         Intent intent = getIntent();
@@ -63,5 +67,21 @@ public class afterPage extends AppCompatActivity {
         } else if (percentCorrect == 100) {
             feedback.setText("Full Marks! \uD83D\uDE0E \n You have mastered this topic!");
         }
+
+        // If the user wants to return to the title
+        returnTitleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                returnTitle();
+            }
+        });
+
     }
+
+    // If the user wants to return to the title
+    public void returnTitle() {
+        Intent intent = new Intent (this, mainActivity.class);
+        startActivity(intent);
+    }
+
 }
