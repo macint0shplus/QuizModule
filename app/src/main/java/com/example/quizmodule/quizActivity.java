@@ -16,6 +16,7 @@ import java.util.Collections;
 public class quizActivity extends AppCompatActivity {
 
     // Setting up UI Widgets
+    private TextView username_TV;
     private TextView question;
     private TextView quizScore;
     private RadioGroup radioGroup;
@@ -34,6 +35,7 @@ public class quizActivity extends AppCompatActivity {
     private int quizIndex = 0;
     private int qaArrayListSize = 0;
     private ArrayList<com.example.quizmodule.QA> qaArrayRoot;
+    private String username = "";
 
     // Setting up arraylists
     ArrayList<Integer> questionsOrderList = new ArrayList<Integer>();
@@ -45,6 +47,7 @@ public class quizActivity extends AppCompatActivity {
         setContentView(R.layout.quiz_activity);
 
         // Connecting UI widgets to variables
+        username_TV = findViewById(R.id.username_TV);
         question = findViewById(R.id.question_TV);
         radioGroup = findViewById(R.id.answers_RG);
         questionNo = findViewById(R.id.questionNumber_TV);
@@ -55,6 +58,7 @@ public class quizActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         quizIndex = intent.getIntExtra("quizIndex", 1);
+
 
         if (quizIndex == 1) {
             qaArrayListSize = QA.getQAs1().size();
@@ -72,6 +76,8 @@ public class quizActivity extends AppCompatActivity {
             qaArrayListSize = QA.getQAs5().size();
             qaArrayRoot = QA.getQAs5();
         }
+
+
 
         // Setting the order in which the questions will be asked. This is through the order of their IDs
         for (int i = 1; i < qaArrayListSize; i++) {

@@ -14,6 +14,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginTop="491dp"
         android:gravity="center|left"
+        android:textColor="#000000"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/confirm_BT"
         app:layout_constraintTop_toTopOf="parent"
@@ -36,6 +37,7 @@
             android:layout_marginTop="120dp"
             android:checked="true"
             android:text="Answer 1"
+            android:textColor="#000000"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -48,6 +50,7 @@
             android:layout_marginLeft="32dp"
             android:layout_marginTop="40dp"
             android:text="Answer 2"
+            android:textColor="#000000"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/answer1_RB" />
@@ -60,6 +63,7 @@
             android:layout_marginLeft="32dp"
             android:layout_marginTop="40dp"
             android:text="Answer 3"
+            android:textColor="#000000"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/answer2_RB" />
@@ -72,6 +76,7 @@
             android:layout_marginLeft="32dp"
             android:layout_marginTop="40dp"
             android:text="Answer 4"
+            android:textColor="#000000"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/answer3_RB" />
@@ -101,6 +106,7 @@
         android:layout_marginRight="44dp"
         android:gravity="center|center_vertical"
         android:text="@string/question"
+        android:textColor="#000000"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -112,6 +118,7 @@
         android:layout_width="199dp"
         android:layout_height="73dp"
         android:text="View Your Results!"
+        android:textColor="#000000"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -123,9 +130,22 @@
         android:id="@+id/questionNumber_TV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="34dp"
+        android:layout_marginTop="6dp"
         android:text="Question Number"
+        android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/username_TV" />
+
+    <TextView
+        android:id="@+id/username_TV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="TextView"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

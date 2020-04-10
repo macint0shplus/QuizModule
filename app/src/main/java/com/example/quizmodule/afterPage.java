@@ -11,6 +11,7 @@ import android.widget.TextView;
 public class afterPage extends AppCompatActivity {
 
     // Initialising UI elements
+   private TextView username_TV;
     private TextView title;
     private TextView quizName;
     private TextView quizMark;
@@ -24,12 +25,14 @@ public class afterPage extends AppCompatActivity {
     private String quizNameStr = "";
     private Button returnTitleButton;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_after_page);
 
         // Connecting views to variables
+        username_TV=findViewById((R.id.username_TV));
         title = findViewById(R.id.title_TV);
         quizName = findViewById((R.id.quizName_TV));
         quizMark = findViewById(R.id.quizMark_TV);
@@ -41,14 +44,22 @@ public class afterPage extends AppCompatActivity {
 
         // Receiving information from the main activity
         Intent intent = getIntent();
-        amountCorrect = intent.getIntExtra("amountCorrect", 0);
-        questionNumber = intent.getIntExtra("questionNumber", 0);
-        quizNameStr = intent.getStringExtra("quizName");
+
+        Bundle bundle = getIntent().getExtras();
+        amountCorrect = bundle.getInt("amountCorrect", 0);
+        questionNumber = bundle.getInt("questionNumber", 0);
+        quizNameStr = bundle.getString("quizName");
+
+
+      //  amountCorrect = intent.getIntExtra("amountCorrect", 0);
+       // questionNumber = intent.getIntExtra("questionNumber", 0);
+      //  quizNameStr = intent.getStringExtra("quizName");
 
         // Calculating the percentage of correct answers
         double percentCorrect = Math.round(((double) amountCorrect / (double) questionNumber * 100) * 10) / 10.0;
 
         // Updating UI elements
+
         quizName.setText(String.valueOf(quizNameStr));
         mark.setText(String.valueOf(amountCorrect) + "/" + String.valueOf(questionNumber));
         percentage.setText(String.valueOf(percentCorrect) + "%");
@@ -80,7 +91,8 @@ public class afterPage extends AppCompatActivity {
 
     // If the user wants to return to the title
     public void returnTitle() {
-        Intent intent = new Intent (this, mainActivity.class);
+        Intent intent = new Intent (this, quizSelectionPage.class);
+
         startActivity(intent);
     }
 
