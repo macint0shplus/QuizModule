@@ -11,7 +11,7 @@ import android.widget.TextView;
 public class afterPage extends AppCompatActivity {
 
     // Initialising UI elements
-   private TextView username_TV;
+    private TextView username_TV;
     private TextView title;
     private TextView quizName;
     private TextView quizMark;
@@ -23,6 +23,7 @@ public class afterPage extends AppCompatActivity {
     private double percentCorrect = 0;
     private int questionNumber = 0;
     private String quizNameStr = "";
+    private Button leaderboardButton;
     private Button returnTitleButton;
 
 
@@ -32,7 +33,7 @@ public class afterPage extends AppCompatActivity {
         setContentView(R.layout.activity_after_page);
 
         // Connecting views to variables
-        username_TV=findViewById((R.id.username_TV));
+        username_TV = findViewById((R.id.username_TV));
         title = findViewById(R.id.title_TV);
         quizName = findViewById((R.id.quizName_TV));
         quizMark = findViewById(R.id.quizMark_TV);
@@ -40,6 +41,7 @@ public class afterPage extends AppCompatActivity {
         mark = findViewById(R.id.mark_TV);
         percentage = findViewById((R.id.percentage_TV));
         feedback = findViewById(R.id.quizFeedback_TV);
+        leaderboardButton = findViewById(R.id.leaderboardButton);
         returnTitleButton = findViewById(R.id.returnTitleButton);
 
         // Receiving information from the main activity
@@ -51,9 +53,9 @@ public class afterPage extends AppCompatActivity {
         quizNameStr = bundle.getString("quizName");
 
 
-      //  amountCorrect = intent.getIntExtra("amountCorrect", 0);
-       // questionNumber = intent.getIntExtra("questionNumber", 0);
-      //  quizNameStr = intent.getStringExtra("quizName");
+        //  amountCorrect = intent.getIntExtra("amountCorrect", 0);
+        // questionNumber = intent.getIntExtra("questionNumber", 0);
+        //  quizNameStr = intent.getStringExtra("quizName");
 
         // Calculating the percentage of correct answers
         double percentCorrect = Math.round(((double) amountCorrect / (double) questionNumber * 100) * 10) / 10.0;
@@ -79,6 +81,13 @@ public class afterPage extends AppCompatActivity {
             feedback.setText("Full Marks! \uD83D\uDE0E \n You have mastered this topic!");
         }
 
+        leaderboardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toGoLeaderboard();
+            }
+        });
+
         // If the user wants to return to the title
         returnTitleButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,9 +98,15 @@ public class afterPage extends AppCompatActivity {
 
     }
 
+    public void toGoLeaderboard() {
+        Intent intent = new Intent(this, QuizScoresTableActivity.class);
+
+        startActivity(intent);
+    }
+
     // If the user wants to return to the title
     public void returnTitle() {
-        Intent intent = new Intent (this, quizSelectionPage.class);
+        Intent intent = new Intent(this, quizSelectionPage.class);
 
         startActivity(intent);
     }

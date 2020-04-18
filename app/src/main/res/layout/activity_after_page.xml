@@ -81,7 +81,7 @@
     <TextView
         android:id="@+id/quizPercentage_TV"
         android:layout_width="142dp"
-        android:layout_height="30dp"
+        android:layout_height="31dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="55dp"
         android:layout_marginRight="55dp"
@@ -97,7 +97,7 @@
         android:id="@+id/quizFeedback_TV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="32dp"
         android:gravity="center|top"
         android:text="Feedback"
         android:textColor="#000000"
@@ -117,7 +117,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/quizFeedback_TV" />
+        app:layout_constraintTop_toBottomOf="@+id/leaderboardButton" />
 
     <TextView
         android:id="@+id/username_TV"
@@ -130,5 +130,16 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/leaderboardButton"
+        android:layout_width="254dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="16dp"
+        android:text="See the Leaderboard"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/quizFeedback_TV" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

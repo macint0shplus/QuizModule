@@ -1,13 +1,17 @@
 package com.example.quizmodule;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import java.util.List;
 
 public class signupPage extends AppCompatActivity {
 
@@ -25,6 +29,8 @@ public class signupPage extends AppCompatActivity {
     private String password;
     private String passwordConfirm;
 
+    private accountUsers tempSignupUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,8 +44,6 @@ public class signupPage extends AppCompatActivity {
         signup_BT = findViewById(R.id.signUp_BT);
         errorMessage_TV = findViewById(R.id.errorMessage_TV);
         errorMessage_TV.setVisibility(View.INVISIBLE);
-
-
 
 
         signup_BT.setOnClickListener(new View.OnClickListener() {
@@ -70,12 +74,24 @@ public class signupPage extends AppCompatActivity {
             errorMessage_TV.setText("Make sure your passwords match");
             errorMessage_TV.setVisibility(View.VISIBLE);
         } else {
-          //  User newUser = new User(0, "a", "a", "s", "d");
 
+           // User newUser = new User(username, fullname, email, password);
+            new insertNewUser().execute();
 
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }
+    }
+
+    private class insertNewUser extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... voids) {
+            UsersDatabase userDB = Room.databaseBuilder(getApplicationContext(), UsersDatabase.class, "users-database").build();
+
+            userDB.userDaoUsers().insert(new accountUsers(username, fullname, email, password));
+            return null;
+        }
+
     }
 
 

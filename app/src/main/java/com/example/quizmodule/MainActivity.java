@@ -1,13 +1,17 @@
 package com.example.quizmodule;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private TextView username_TV;
@@ -22,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     String username = "";
     String password = "";
     boolean validUser = false;
+
+    UsersDatabase usersDB = Room.databaseBuilder(getApplicationContext(), UsersDatabase.class, "users-database").build();
 
 
     @Override
@@ -44,7 +50,11 @@ public class MainActivity extends AppCompatActivity {
                 tempUsername = userUsername_TV.getText().toString();
                 // System.out.println
                 tempPassword = userPassword_TV.getText().toString();
-                login(tempUsername, tempPassword);
+                //login(tempUsername, tempPassword);
+           new getUserDetailsTask().execute();
+
+
+
             }
         });
 
@@ -59,23 +69,42 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void login(String tempUsername, String tempPassword) {
-        for (int i = 0; i < User.getUsers().size(); i++) {
-            System.out.println("USER: " + User.getUsers().get(i).getUsername());
 
-            if (User.getUsers().get(i).getUsername().equals(tempUsername) && User.getUsers().get(i).getPassword().equals(tempPassword)) {
-                Intent intent = new Intent(this, quizSelectionPage.class);
-                intent.putExtra("username", tempUsername);
-                startActivity(intent);
+    // will change to ROOM
+    private class getUserDetailsTask extends AsyncTask<Void, Void, accountUsers> {
+        @Override
+        protected accountUsers doInBackground(Void... voids) {
+
+            return usersDB.userDaoUsers().getUsernameByString(tempUsername);
+        }
+
+        @Override
+        protected void onPostExecute(accountUsers tempUser) {
+
+            if((tempUser.username == tempUsername) && (tempUser.password == tempPassword)){
+                login();
+
             } else {
                 errorMessage_TV.setVisibility(View.VISIBLE);
             }
+
         }
     }
+
+
+
+
+
 
     public void signup(){
         Intent intent = new Intent(this, signupPage.class);
              startActivity(intent);
+    }
+
+    public void login(){
+        Intent intent = new Intent(this, quizSelectionPage.class);
+        intent.putExtra("username", tempUsername);
+        startActivity(intent);
     }
 
 }
